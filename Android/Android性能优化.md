@@ -11,7 +11,7 @@
 
 ##### < merge >
 
-> < merge >标签一般和< include >标签一起配合只用从而减少布局的层级。例如外层布局A是LinearLayout，include进来的布局B也是LinearLayout，那么显然被包含的布局文件中的LinearLayout是多余的。通过< merge >标签就可以去掉多余的那一层LinearLayout。例子如下：
+> < merge >标签一般和< include >标签一起配合使用从而减少布局的层级。例如外层布局A是LinearLayout，include进来的布局B也是LinearLayout，那么显然被包含的布局文件中的LinearLayout是多余的。通过< merge >标签就可以去掉多余的那一层LinearLayout。例子如下：
 
     layout A:
     <LinearLayout>
@@ -53,7 +53,7 @@
 
 #### 内存泄露优化
 
-> 内存泄露优化分为两个方面，一方面是在开发过程中避免写出有内存泄露的代码，另一方面是通过一些分析工具比如MAT来找出潜在的内存泄露继而解决。
+> 内存泄露的根本原因是长生命周期的对象持有短生命周期的对象。内存泄露优化分为两个方面，一方面是在开发过程中避免写出有内存泄露的代码，另一方面是通过一些分析工具比如MAT来找出潜在的内存泄露继而解决。
 
 ##### 常见内存泄露
 
@@ -62,6 +62,34 @@
 - 静态变量导致的内存泄露。静态变量持有Activity等对象导致Activity对象无法销毁。
 - 单例模式导致的内存泄露。Activity等对象被单例模式所持有，而单例模式的特点是生命周期和Application保持一致。导致Activity对象无法被释放。
 - 属性动画中无限循环的动画没有在onDestroy()中停止。动画会一直播放下去。尽管在界面上已经无法看到动画效果了。这个时候Activity的View被动画持有，而View又持有了Activity，最终导致Activity无法释放。
+
+内存泄露的根本原因：长生命周期的对象持有短生命周期的对象。短周期对象就无法及时释放。
+
+    I. 静态集合类引起内存泄露
+
+    主要是hashmap，Vector等，如果是静态集合 这些集合没有及时setnull的话，就会一直持有这些对象。
+
+    II.remove 方法无法删除set集  Objects.hash(firstName, lastName);
+
+    经过测试，hashcode修改后，就没有办法remove了。
+
+    III. observer 我们在使用监听器的时候，往往是addxxxlistener，但是当我们不需要的时候，忘记removexxxlistener，就容易内存leak。
+
+    广播没有unregisterrecevier
+
+    IV.各种数据链接没有关闭，数据库contentprovider，io，sokect等。cursor
+
+    V.内部类：
+
+    java中的内部类（匿名内部类），会持有宿主类的强引用this。
+
+    所以如果是new Thread这种，后台线程的操作，当线程没有执行结束时，activity不会被回收。
+
+    Context的引用，当TextView 等等都会持有上下文的引用。如果有static drawable，就会导致该内存无法释放。
+
+    VI.单例
+
+    单例 是一个全局的静态对象，当持有某个复制的类A是，A无法被释放，内存leak。
 
 ##### 通过工具分析内存泄露
 
@@ -101,7 +129,7 @@ todo
 - 避免创建过多的对象。
 - 不要过多使用枚举，枚举占用的内存空间要比整型大。
 - 常量使用static final来修饰。
-- 使用一些Android特有的数据结构，如SparseArray和Pair等，他没有更好的性能。
+- 使用一些Android特有的数据结构，如SparseArray和Pair等，他们有更好的性能。
 - 适当使用软引用和弱引用。
 - 采用内存缓存和磁盘缓存。
 - 尽量采用静态内部类，这样可以避免潜在的由于内部类而导致的内存泄露。
@@ -119,4 +147,8 @@ todo
 - 层次性和单一职责原则
 - 面向扩展编程
 - 设计模式：常用的单例模式、工厂模式、观察者模式。《Android源码设计模式解析与实战》
+
+
+备注：
+整理自《Android开发艺术探索》
 
