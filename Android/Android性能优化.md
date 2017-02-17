@@ -2,12 +2,13 @@
 
 > 性能优化方法包含布局优化、绘制优化、内存泄露优化、响应速度优化、ListView优化、Bitmap优化、线程优化以及一些性能优化建议。
 
-#### 布局优化
+#### 布局优化，绘制优化
 
 - 尽量减少布局文件的层级。
 - 尽量只用FrameLayout和LinearLayout等简单高效的ViewGroup。
 - 在无法实现产品效果的情况下，与其使用RelativeLayout等复杂ViewGroup，不要使用嵌套。
 - 使用< include >，< merge >，ViewStub。
+- 防止过度绘制，使用工具Hierarchy View去检测过度绘制。Hierarchy View可以展示视图层级的树状图，可以显示每一个View的measure、layout、draw的时间。
 
 ##### < merge >
 
@@ -119,8 +120,9 @@ todo
 
 #### 线程优化
 
-> 线程优化的思想史采用线程池，避免程序中存在大量的线程、野线程。线程池可以重用内部的线程，从而避免了线程的创建和销毁所带来的性能开销。
+> 线程优化的思想是采用线程池，避免程序中存在大量的线程、野线程。线程池可以重用内部的线程，从而避免了线程的创建和销毁所带来的性能开销。
 > 线程池还能有效的控制线程池的最大并发数，避免大量的线程因互相抢占系统资源从而导致阻塞现象的发生。
+> 有四种线程池，FixedThrealPool,CachedThreadPool,ScheduledThreadPool,SingleThreadExecutor.
 
 todo
 
@@ -146,6 +148,7 @@ todo
     + 注释
 - 层次性和单一职责原则
 - 面向扩展编程
+- 面向对象编程OOP
 - 设计模式：常用的单例模式、工厂模式、观察者模式。《Android源码设计模式解析与实战》
 
 

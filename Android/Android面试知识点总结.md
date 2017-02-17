@@ -6,8 +6,90 @@
 > 《Android开发艺术探索》部分章节整理。
 > 网上其他各种面试题库
 
-大知识点1：
-------
+
+### 大知识点1：
+
+---
+
+#### Android系统与框架
+
+> 参考文章：
+> [Android系统介绍与框架](http://blog.csdn.net/byxdaz/article/details/9457371)
+> [Android框架](http://www.cnblogs.com/forlina/archive/2011/06/29/2093332.html)
+
+##### Android 是什么
+Android是Google开发的一款开源移动OS，基于Linux内核设计，使用Google自己开发的Dalvik Java虚拟机。
+##### Android有几大优势：
+
+    - 开放性
+    - 厂商支持
+    - Dilvik虚拟机
+    - 多元化
+    - 应用程序间的无界限
+    - 紧密结合Google应用
+
+##### Android系统架构
+Android系统架构为四层架构，如图所示从上至下分别是：
+
+![Android系统框架图](http://img.blog.csdn.net/20130724232645984?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYnl4ZGF6/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast "Android系统框架图")
+
+    - 应用程序层(Application)
+    - 应用程序框架层(Application Framework)
+    - 系统运行库层(Libraries)
+    - Linux内核层(Linux kernal)
+
+1）应用程序层
+
+    Android平台不仅仅是操作系统，也包含了许多应用程序，并且这些程序是可以被开发人员开发的其他程序所替代的。
+
+2）应用程序框架层
+
+    是Android开发的基础，很多核心应用也是通过这一层来实现其核心功能的，该层简化了组件的重用，开发人员可以直接使用其提供的组件来进行快速的程序开发，也可以通过继承来实现个性化的扩展。
+    - Activity Manager（活动管理器）管理各个应用程序的生命周期以及通常的导航回退功能。
+    - Window Manager（窗口管理器）管理所有的窗口程序。
+    - Content Provider（内容提供器）使得不同应用程序之间存取或者分享数据。
+    - View System（视图系统）构建应用程序的基本组件。
+    - Notification Manager（通知管理器）使得应用程序可以在状态栏中显示自定义的提示消息。
+    - Package Manager（包管理器）Android系统内的程序管理。
+    - Telephony Manager（电话管理器）管理所有的移动设备功能。
+    - Resource Manager（资源管理器）提供应用程序使用的各种非代码资源，如本地化字符串、图片、布局文件、颜色文件等。
+    - Location Manager（位置管理器）提供位置服务。
+    - XMPP Service（XMPP服务）提供Google Talk服务。
+
+3）系统运行库层
+    
+    - 系统库
+    - Android Runtime
+
+4）Linux内核层
+
+---
+
+#### Application类与Android 应用程序生命周期
+
+> 参考文章：
+> [【Android 应用开发】 Application 使用分析](http://blog.csdn.net/shulianghan/article/details/40737419) 详细好文，非常全面！
+> [Android Application详解和使用](http://blog.csdn.net/eagle1054/article/details/51839167)
+> [[译]玩转Android Application的生命周期(不，不许覆盖那个Home键)](http://blog.csdn.net/qq284565035/article/details/51811590) | [原文](http://www.developerphil.com/no-you-can-not-override-the-home-button-but-you-dont-have-to/)
+> [android Application类的详细介绍](http://blog.csdn.net/pi9nc/article/details/11200969)
+> [Application类官方文档](https://developer.android.google.cn/reference/android/app/Application.html#onTrimMemory(int))
+
+##### Application是什么
+Application类一个可以用来保存全局变量的基本类。可以自己创建一个类继承Application并且在AndroidManifest里面注册即可。Application和Activity,Service一样,是android框架的一个系统组件，当android程序启动时系统会创建一个application对象。Application可以说是单例(singleton)模式的一个类。且application对象的生命周期是整个程序中最长的，它的生命周期就等于这个程序的生命周期。调用Context的getApplicationContext或者Activity的getApplication方法来获得一个application对象。
+
+Application中没有onStart(),onStop()方法。但是有onCreate(),onTerminate()方法。
+在4.0(API LEVEL 14)中还加入了onTrimMemory()方法。
+
+##### Application.registerActivityLifecycleCallbacks() 与 ActivityLifecycleCallbacks
+
+Application通过此接口提供了一套回调方法，用于让开发者对Activity的生命周期事件进行集中处理。不需要再每一个Activity的生命周期的回调函数中写多次。具体参考：[Android开发 - ActivityLifecycleCallbacks使用方法初探](http://blog.csdn.net/tongcpp/article/details/40344871)
+
+##### Application能干什么
+> 保存全局应用状态的信息，而且是单例模式，生命周期贯穿整个应用的运行。基于这一点，我们可以利用它的全局单例，保存一些系统运行时的状态信息，和数据操作的动作。例如：
+
+- 用户登录信息保存
+- Activity之间数据的传递，在Application中维护一个Map
+
 
 ---
 
@@ -32,19 +114,15 @@
     + 参考文档：http://blog.csdn.net/su20145104009/article/details/50662731
 
 ---
-- AIDL：熟悉AIDL，理解其工作原理，懂transact和onTransact的区别；
-- Binder：从Java层大概理解Binder的工作原理，懂Parcel对象的使用；
 
----
-- 多进程：熟练掌握多进程的运行机制，懂Messenger、Socket等；
-
-
-
+#### AIDL：熟悉AIDL，理解其工作原理，懂transact和onTransact的区别；
+#### Binder：从Java层大概理解Binder的工作原理，懂Parcel对象的使用；
+#### 多进程：熟练掌握多进程的运行机制，懂Messenger、Socket等；
 ---
 #### 事件分发：弹性滑动、滑动冲突等； 
 
-答案：
-##### 参考文档
+参考文档
+
 -  [Android事件分发机制完全解析，带你从源码的角度彻底理解(上)](http://blog.csdn.net/guolin_blog/article/details/9097463)
 -  [Android事件分发机制完全解析，带你从源码的角度彻底理解(下)](http://blog.csdn.net/guolin_blog/article/details/9153747)
 -  [Android事件传递之子View和父View的那点事](http://www.jianshu.com/p/7ff768a77410)
@@ -54,13 +132,33 @@
     +  非常详细完整的关于ViewGroup内部事件传递所涉及的几个主要函数的流程图。
 
 ---
-- 玩转View：View的绘制原理、各种自定义View； 
-- 动画系列：熟悉View动画和属性动画的不同点，懂属性动画的工作原理； 
-- 懂性能优化、熟悉mat等工具 
-- 懂点常见的设计模式
-- 线程安全相关知识，什么是线程安全？
-- 热门，最新，牛逼的，常见的库的了解，总结，试验，使用等全方面的熟悉掌握。
+#### 玩转View：View的绘制原理、各种自定义View； 
+#### Android消息机制
+
+    + [Android消息处理机制(Handler、Looper、MessageQueue与Message)详解(详细全面的好文)](http://www.cnblogs.com/angeldevil/p/3340644.html)
+    + [Android 中线程间通信原理分析：Looper, MessageQueue, Handler](https://segmentfault.com/a/1190000006171396)
+
+
+#### 动画系列：熟悉View动画和属性动画的不同点，懂属性动画的工作原理； 
+#### 懂性能优化、熟悉mat等工具 
+#### 懂点常见的设计模式
+#### 线程安全相关知识，什么是线程安全？
+#### Android网络编程
+
+---
+#### Android过度绘制优化
+
+参考文章：
+> [在Android Studio下使用Hierarchy Viewer](http://oyjt.github.io/2016/04/18/%E5%9C%A8Android%20Studio%E4%B8%8B%E4%BD%BF%E7%94%A8Hierarchy%20Viewer/?utm_source=tuicool&utm_medium=referral)
+> [Android UI性能优化详解](http://mrpeak.cn/android/2016/01/11/android-performance-ui) (详细全面的好文)
+> [Android过度绘制优化心得](http://blog.csdn.net/moyameizan/article/details/47807327)
+
+---
+
+#### 热门，最新，牛逼的，常见的库的了解，总结，试验，使用等全方面的熟悉掌握。
     + [2016 Top 10 Android Library](https://zhuanlan.zhihu.com/p/24920487)
+
+
 
 大块知识点2：
 ------
@@ -97,6 +195,8 @@
 - 如何修改 Activity 进入和退出动画
 - SurfaceView & View 的区别
 - 使用过那些自定义View
+- 强引用、弱引用、软引用
+- 初步了解react native
 
 ### 答案
 
