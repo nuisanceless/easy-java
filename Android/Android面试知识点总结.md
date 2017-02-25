@@ -144,6 +144,18 @@ Application通过此接口提供了一套回调方法，用于让开发者对Act
 #### 懂点常见的设计模式
 #### 线程安全相关知识，什么是线程安全？
 #### Android网络编程
+#### 热部署、热修复、插件化开发
+#### 常见数据结构，常见算法，算法的时间复杂度，设计模式
+
+---
+#### Socket、Http网络编程
+- socket [Android学习笔记49：Socket编程实现简易聊天室](http://www.cnblogs.com/menlsh/archive/2013/06/12/3133296.html)
+- socket [读懂Java中的Socket编程](http://droidyue.com/blog/2015/03/08/sockets-programming-in-java/)
+- http [Android操作HTTP实现与服务器通信](http://www.cnblogs.com/hanyonglu/archive/2012/02/19/2357842.html)
+
+
+---
+#### Http/Https网络编程。TCP/IP协议
 
 ---
 #### Android过度绘制优化
@@ -158,6 +170,11 @@ Application通过此接口提供了一套回调方法，用于让开发者对Act
 #### 热门，最新，牛逼的，常见的库的了解，总结，试验，使用等全方面的熟悉掌握。
     + [2016 Top 10 Android Library](https://zhuanlan.zhihu.com/p/24920487)
 
+---
+
+#### 美团点评技术团队
+> [网站](http://tech.meituan.com/)
+> 各种技术牛文，多看看
 
 
 大块知识点2：
