@@ -116,8 +116,38 @@ Application通过此接口提供了一套回调方法，用于让开发者对Act
 ---
 
 #### AIDL：熟悉AIDL，理解其工作原理，懂transact和onTransact的区别；
+
+> 参考文档：
+> [Android：学习AIDL，这一篇文章就够了(上)](http://blog.csdn.net/luoyanglizi/article/details/51980630)
+> [Android：学习AIDL，这一篇文章就够了(下)](http://blog.csdn.net/luoyanglizi/article/details/52029091)
+
+- AIDL（android interface definition language）接口描述语言。
+- 是一种语言。
+- 为了实现进程间通信，尤其是涉及多进程并发情况下的进程间通信。
+- 语法基本和java一样，但是有如下几个区别
+    + aidl文件后缀是.aidl不是.java。
+    + 支持的数据类型
+        * Java中的八种基本数据类型，包括byte，short，int，long，float，double，boolean，char。
+        * String 类型。
+        * CharSequence类型。
+        * List类型：List中的所有元素必须是AIDL支持的类型之一，或者是一个其他AIDL生成的接口，或者是定义的parcelable（下文关于这个会有详解）。List可以使用泛型。
+        * Map类型：Map中的所有元素必须是AIDL支持的类型之一，或者是一个其他AIDL生成的接口，或者是定义的parcelable。Map是不支持泛型的。
+    + 就算在同一个包中也要导入（import）
+    + 定向tag（参考博客）
+    + 两种aidl文件（参考博客）
+- 事实上，就算我们不写AIDL文件，直接按照它生成的.java文件那样写一个.java文件出来，在服务端和客户端中也可以照常使用这个.java类来进行跨进程通信。所以说AIDL语言只是在简化我们写这个.java文件的工作而已，而要研究AIDL是如何帮助我们进行跨进程通信的，其实就是研究这个生成的.java文件是如何工作的。
+- 完成AIDL中非默认支持数据类型的序列化。
+
+---
 #### Binder：从Java层大概理解Binder的工作原理，懂Parcel对象的使用；
-#### 多进程：熟练掌握多进程的运行机制，懂Messenger、Socket等；
+---
+#### 多进程：熟练掌握多进程的运行机制，IPC、懂Messenger、Socket等；
+
+IPC的几种方式
+- 利用intent传递bundle。
+- 使用文件共享（有局限性，比如并发读写）
+    + SharePreferences底层实现上采用XML文件来存储键值对。XML在每一个应用的文件目录上。高并发读写数据丢失几率大，不建议IPC使用它。
+
 ---
 #### 事件分发：弹性滑动、滑动冲突等； 
 
@@ -176,6 +206,9 @@ Application通过此接口提供了一套回调方法，用于让开发者对Act
 > [网站](http://tech.meituan.com/)
 > 各种技术牛文，多看看
 
+#### 分析自己和优秀的开发工程师的差距在哪里。不是知识点掌握上的差距，是方式方法做事上的差距
+#### 去GitHub等地方找一个Android Util库。（如文件操作库啥的）
+
 
 大块知识点2：
 ------
@@ -214,6 +247,10 @@ Application通过此接口提供了一套回调方法，用于让开发者对Act
 - 使用过那些自定义View
 - 强引用、弱引用、软引用
 - 初步了解react native
+- RecyclerView
+- MVP,MVC,MVVM架构之间的区别
+    + [MVC与MVP架构特点与区别-android](http://blog.csdn.net/shareus/article/details/51481308)
+    + MVC\MVP的主要区别：所以两者的主要区别是，MVP中View不能直接访问Model，需要通过Presenter发出请求，View与Model不能直接通信。
 
 ### 答案
 
