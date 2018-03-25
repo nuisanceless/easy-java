@@ -5,7 +5,7 @@
 #### 布局优化，绘制优化
 
 - 尽量减少布局文件的层级。
-- 尽量只用FrameLayout和LinearLayout等简单高效的ViewGroup。
+- 尽量只用FrameLayout（帧布局）和LinearLayout等简单高效的ViewGroup。
 - 在无法实现产品效果的情况下，与其使用RelativeLayout等复杂ViewGroup，不要使用嵌套。
 - 使用< include >，< merge >，ViewStub。
 - 防止过度绘制，使用工具Hierarchy View去检测过度绘制。Hierarchy View可以展示视图层级的树状图，可以显示每一个View的measure、layout、draw的时间。
