@@ -1,6 +1,6 @@
 ### Android 性能优化
 
-> 性能优化方法包含布局优化、绘制优化、内存泄露优化、响应速度优化、ListView优化、Bitmap优化、线程优化以及一些性能优化建议。
+> 性能优化方法包含布局优化、绘制优化、内存泄露优化、线程优化、响应速度优化、列表优化（ListView,GridView,RecycleView）、Bitmap优化以及一些性能优化建议。
 
 #### 布局优化，绘制优化
 
@@ -49,7 +49,7 @@
 
 > View的onDraw方法要避免执行大量的操作
 
-- onDraw中不要创建新的局部对象。
+- onDraw中不要创建新的局部对象，因为onDraw不停的被调用，产生大量局部变量，会启动垃圾回收机制GC工作，影响性能。
 - onDraw中不要做耗时的任务。View的绘制帧率为60fps最佳。所以每帧的绘制时间不要超过16ms（1000 / 60）。
 
 #### 内存泄露优化
@@ -100,21 +100,20 @@
 #### 响应速度优化和ANR日志分析
 
 > 响应速度优化的核心思想就是避免在主线程中做耗时的操作。
-> Android规定，Activity在5秒钟，BroadcastReceiver在10秒钟之内没有响应或者没有执行完操作就会出现ANR。
+> Android规定，Activity在5秒钟，BroadcastReceiver在10秒钟之内，Service在20秒内没有响应或者没有执行完操作就会出现ANR。
 > ANR出现之后，系统会在/data/anr 目录下面创建一个traces.txt文件，通过分析这个文件里面的日志信息可以定位出ANR的原因。log日志信息包括耗时操作具体语句的定位，线程信息等。
 
 #### ListView优化
 
 - 采用ViewHolder并且避免在getView中执行耗时的操作。
-- 根据列表的滑动状态来控制任务的执行频率。如当列表快速滑动的时候不要开启大量异步任务。
-- 开启硬件加速来使ListView的滑动更加流畅。
+- 根据列表的滑动状态来控制任务的执行频率。如当列表快速滑动的时候不要开启大量异步任务。在OnScrollListener的onScrollStateChanged方法中判断列表的滑动状态。
+- 开启硬件加速来使ListView的滑动更加流畅。通过设置 android:hardwareAccelerated="true"即可为Activity开启硬件加速。
 - GridView的优化策略和ListView一直。
 
-todo详细
 
 #### Bitmap优化
 
-> 主要通过BitmapFactory.Options来根据需要多图片进行采集。采集过程中主要用到了BitmapFactory.Options的inSampleSize参数。
+> 主要通过BitmapFactory.Options来根据需要对图片进行采集。采集过程中主要用到了BitmapFactory.Options的inSampleSize参数。
 
 todo
 
@@ -122,9 +121,13 @@ todo
 
 > 线程优化的思想是采用线程池，避免程序中存在大量的线程、野线程。线程池可以重用内部的线程，从而避免了线程的创建和销毁所带来的性能开销。
 > 线程池还能有效的控制线程池的最大并发数，避免大量的线程因互相抢占系统资源从而导致阻塞现象的发生。
-> 有四种线程池，FixedThrealPool,CachedThreadPool,ScheduledThreadPool,SingleThreadExecutor.
+> 常用有四种线程池，FixedThrealPool,CachedThreadPool,ScheduledThreadPool,SingleThreadExecutor.
+> ThreadPoolExecutor是线程池的真正实现，通过构造方法里面的参数配置不同的线程池。
 
-todo
+- FixedThreadPool 只有核心线程，且数量固定，无超时时间。
+- CachedThreadPool 没有核心线程，只有非核心线程，且数量无限大，有60秒超时机制。
+- ScheduledThreadPool 核心线程数量固定，非核心线程数量不限制，但是非核心线程闲置后立即被回收。
+- SingleThreadExecutor 有些只有一个核心线程且不超时，不需要处理线程同步问题。
 
 #### 一些性能优化建议
 
