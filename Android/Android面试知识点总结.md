@@ -192,6 +192,8 @@ IPC的几种方式
 - socket [Android学习笔记49：Socket编程实现简易聊天室](http://www.cnblogs.com/menlsh/archive/2013/06/12/3133296.html)
 - socket [读懂Java中的Socket编程](http://droidyue.com/blog/2015/03/08/sockets-programming-in-java/)
 - http [Android操作HTTP实现与服务器通信](http://www.cnblogs.com/hanyonglu/archive/2012/02/19/2357842.html)
+    + HttpUrlConnection
+    + HttpClient(API23,6.0中废弃)
 
 
 ---
