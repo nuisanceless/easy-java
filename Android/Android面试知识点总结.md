@@ -69,7 +69,7 @@ Android系统架构为四层架构，如图所示从上至下分别是：
 
 > 参考文章：
 > [【Android 应用开发】 Application 使用分析](http://blog.csdn.net/shulianghan/article/details/40737419) 详细好文，非常全面！
-> [Android Application详解和使用](http://blog.csdn.net/eagle1054/article/details/51839167)
+> [Android Application详解和使用](http://blog.csdn.net/eagle1054/article/details/51839167) 好文。清晰。
 > [[译]玩转Android Application的生命周期(不，不许覆盖那个Home键)](http://blog.csdn.net/qq284565035/article/details/51811590) | [原文](http://www.developerphil.com/no-you-can-not-override-the-home-button-but-you-dont-have-to/)
 > [android Application类的详细介绍](http://blog.csdn.net/pi9nc/article/details/11200969)
 > [Application类官方文档](https://developer.android.google.cn/reference/android/app/Application.html#onTrimMemory(int))
@@ -89,6 +89,8 @@ Application通过此接口提供了一套回调方法，用于让开发者对Act
 
 - 用户登录信息保存
 - Activity之间数据的传递，在Application中维护一个Map
+- 保存未捕获崩溃日志到文件。UncaughtExceptionHandler类里面的uncaughtException(Thread thread, Throwable ex);方法。
+- 监听Activity生命周期。ActivityLifecycleCallbacks
 
 
 ---
