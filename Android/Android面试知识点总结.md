@@ -142,6 +142,9 @@ Application通过此接口提供了一套回调方法，用于让开发者对Act
 
 ---
 #### Binder：从Java层大概理解Binder的工作原理，懂Parcel对象的使用；
+
+[Binder学习概要](https://www.jianshu.com/p/a50d3f2733d6)
+
 ---
 #### 多进程：熟练掌握多进程的运行机制，IPC、懂Messenger、Socket等；
 
@@ -149,6 +152,11 @@ IPC的几种方式
 - 利用intent传递bundle。
 - 使用文件共享（有局限性，比如并发读写）
     + SharePreferences底层实现上采用XML文件来存储键值对。XML在每一个应用的文件目录上。高并发读写数据丢失几率大，不建议IPC使用它。
+- AIDL
+- Messenger
+- ContentProvider
+- Socket
+    + 监听端口建立连接，然后就跟访问文件一样读取流。
 
 ---
 #### 事件分发：弹性滑动、滑动冲突等； 
